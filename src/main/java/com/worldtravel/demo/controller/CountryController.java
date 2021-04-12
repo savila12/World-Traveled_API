@@ -14,22 +14,22 @@ import java.util.List;
 @RequestMapping(path = "/api")
 public class CountryController {
 
-    private CountryService countryService;
-
-    @Autowired
-    public void setCountryService(CountryService countryService){
-        this.countryService = countryService;
-    }
-
-    @GetMapping("/hello")
-    public String helloWorld(){
-        return "Hello World";
-    }
-
-    //http://localhost:PORTNUMBER/api/categories
-    @GetMapping("/countries")
-    public List<Country> getCountries (){
-        System.out.println("calling getCountries =====>");
-        return countryService.getCountries();
-    }
+//    private CountryService countryService;
+//
+//    @Autowired
+//    public void setCountryService(CountryService countryService){
+//        this.countryService = countryService;
+//    }
+//
+//    @GetMapping("/hello")
+//    public String helloWorld(){
+//        return "Hello World";
+//    }
+//
+//    //http://localhost:PORTNUMBER/api/categories
+//    @GetMapping("/countries")
+//    public List<Country> getCountries (){
+//        System.out.println("calling getCountries =====>");
+//        return countryService.getCountries();
+//    }
 }

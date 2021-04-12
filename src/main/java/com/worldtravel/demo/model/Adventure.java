@@ -22,6 +22,9 @@ public class Adventure {
     @Column
     private String adventureDescription;
 
+    @Column
+    private String countryName;
+
 
 
     @JsonIgnore
@@ -37,11 +40,12 @@ public class Adventure {
     public Adventure() {
     }
 
-    public Adventure(Long id, String adventureName, String dateWent, String adventureDescription) {
+    public Adventure(Long id, String adventureName, String dateWent, String adventureDescription, String countryName) {
         this.id = id;
         this.adventureName = adventureName;
         this.dateWent = dateWent;
         this.adventureDescription = adventureDescription;
+        this.countryName = countryName;
     }
 
     public Long getId() {
@@ -68,15 +72,6 @@ public class Adventure {
         this.adventureDescription = adventureDescription;
     }
 
-    @Override
-    public String toString() {
-        return "Adventure{" +
-                "id=" + id +
-                ", dateWent='" + dateWent + '\'' +
-                ", adventureDescription='" + adventureDescription + '\'' +
-                '}';
-    }
-
     public String getAdventureName() {
         return adventureName;
     }
@@ -95,5 +90,24 @@ public class Adventure {
 
     public void setCountry(Country country) {
         this.country = country;
+    }
+
+    @Override
+    public String toString() {
+        return "Adventure{" +
+                "id=" + id +
+                ", adventureName='" + adventureName + '\'' +
+                ", dateWent='" + dateWent + '\'' +
+                ", adventureDescription='" + adventureDescription + '\'' +
+                ", countryName='" + countryName + '\'' +
+                '}';
+    }
+
+    public String getCountryName() {
+        return countryName;
+    }
+
+    public void setCountryName(String countryName) {
+        this.countryName = countryName;
     }
 }
