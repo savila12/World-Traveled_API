@@ -26,25 +26,45 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 1e9b6f771034e1ba64ced1b4c5dd8227f43865ab
         <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
             <version>2.4.4</version>
         </dependency>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 1e9b6f771034e1ba64ced1b4c5dd8227f43865ab
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 1e9b6f771034e1ba64ced1b4c5dd8227f43865ab
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <scope>runtime</scope>
         </dependency>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 1e9b6f771034e1ba64ced1b4c5dd8227f43865ab
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 1e9b6f771034e1ba64ced1b4c5dd8227f43865ab
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt</artifactId>
