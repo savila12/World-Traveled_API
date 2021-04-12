@@ -8,10 +8,10 @@ import javax.persistence.*;
 @Table(name = "adventures")
 public class Adventure {
 
-    @EmbeddedId
+    @Id
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    AdventureKey  adventureKeyId;
+    private Long  id;
 
     @Column
     private String adventureName;
@@ -26,32 +26,30 @@ public class Adventure {
 
     @JsonIgnore
     @ManyToOne
-    @MapsId("userId")
     @JoinColumn(name = "user_id")
     private User user;
 
     @JsonIgnore
     @ManyToOne
-    @MapsId("countryId")
     @JoinColumn(name = "country_id")
     private Country country;
 
     public Adventure() {
     }
 
-    public Adventure(AdventureKey adventureKeyId, String adventureName, String dateWent, String adventureDescription) {
-        this.adventureKeyId = adventureKeyId;
+    public Adventure(Long id, String adventureName, String dateWent, String adventureDescription) {
+        this.id = id;
         this.adventureName = adventureName;
         this.dateWent = dateWent;
         this.adventureDescription = adventureDescription;
     }
 
-    public AdventureKey getId() {
-        return adventureKeyId;
+    public Long getId() {
+        return id;
     }
 
-    public void setId(AdventureKey adventureKeyId) {
-        this.adventureKeyId = adventureKeyId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getDateWent() {
@@ -73,7 +71,7 @@ public class Adventure {
     @Override
     public String toString() {
         return "Adventure{" +
-                "id=" + adventureKeyId +
+                "id=" + id +
                 ", dateWent='" + dateWent + '\'' +
                 ", adventureDescription='" + adventureDescription + '\'' +
                 '}';
