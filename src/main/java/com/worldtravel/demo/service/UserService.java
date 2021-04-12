@@ -4,6 +4,7 @@ import com.worldtravel.demo.exception.InformationExistsException;
 import com.worldtravel.demo.exception.InformationNotFoundException;
 import com.worldtravel.demo.model.User;
 import com.worldtravel.demo.model.loginRequest.LoginRequest;
+import com.worldtravel.demo.model.response.LoginResponse;
 import com.worldtravel.demo.repository.UserRepository;
 import com.worldtravel.demo.security.JWTUtils;
 import org.springframework.beans.factory.annotation.Autowired;
