@@ -3,6 +3,7 @@ package com.worldtravel.demo.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name="users")
@@ -26,6 +27,9 @@ public class User {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "profile_id", referencedColumnName = "id")
     private UserProfile userProfile;
+
+    @OneToMany(mappedBy = "user")
+    private Set<Adventure> adventures;
 
     public User() {
     }

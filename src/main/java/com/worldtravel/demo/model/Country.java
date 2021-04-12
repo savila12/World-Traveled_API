@@ -19,9 +19,11 @@ public class Country {
     @Column
     private String name;
 
-    @OneToMany(mappedBy = "countries", orphanRemoval = true)
+    @OneToMany(mappedBy = "country", orphanRemoval = true)
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Adventure> adventureList;
+
+
 
     public Country() {
     }
