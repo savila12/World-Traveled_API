@@ -5,6 +5,7 @@ import com.worldtravel.demo.exception.InformationNotFoundException;
 import com.worldtravel.demo.model.User;
 import com.worldtravel.demo.model.loginRequest.LoginRequest;
 import com.worldtravel.demo.repository.UserRepository;
+import com.worldtravel.demo.security.JWTUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,6 +25,9 @@ public class UserService {
 
     @Autowired
     private AuthenticationManager authenticationManager;
+
+    @Autowired
+    JWTUtils jwtUtils;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
