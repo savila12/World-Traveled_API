@@ -14,10 +14,15 @@ public class Adventure {
     private Long id;
 
     @Column
+    private String adventureName;
+
+    @Column
     private String dateWent;
 
     @Column
     private String adventureDescription;
+
+
 
     @JsonIgnore
     @ManyToOne
@@ -32,8 +37,9 @@ public class Adventure {
     public Adventure() {
     }
 
-    public Adventure(Long id, String dateWent, String adventureDescription) {
+    public Adventure(Long id, String adventureName, String dateWent, String adventureDescription) {
         this.id = id;
+        this.adventureName = adventureName;
         this.dateWent = dateWent;
         this.adventureDescription = adventureDescription;
     }
@@ -69,5 +75,25 @@ public class Adventure {
                 ", dateWent='" + dateWent + '\'' +
                 ", adventureDescription='" + adventureDescription + '\'' +
                 '}';
+    }
+
+    public String getAdventureName() {
+        return adventureName;
+    }
+
+    public void setAdventureName(String adventureName) {
+        this.adventureName = adventureName;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public Country getCountry() {
+        return country;
+    }
+
+    public void setCountry(Country country) {
+        this.country = country;
     }
 }

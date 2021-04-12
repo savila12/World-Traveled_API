@@ -1,7 +1,11 @@
 package com.worldtravel.demo.model;
 
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "countries")
@@ -15,6 +19,9 @@ public class Country {
     @Column
     private String name;
 
+    @OneToMany(mappedBy = "countries", orphanRemoval = true)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Adventure> adventureList;
 
     public Country() {
     }
@@ -46,5 +53,14 @@ public class Country {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';
+    }
+
+
+    public List<Adventure> getAdventureList() {
+        return adventureList;
+    }
+
+    public void setAdventureList(List<Adventure> adventureList) {
+        this.adventureList = adventureList;
     }
 }
