@@ -12,19 +12,23 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class UserService {
     private UserRepository userRepository;
 
-//    @Autowired
-//    private PasswordEncoder passwordEncoder;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
    @Autowired
     public void setUserRepository(UserRepository userRepository){
         this.userRepository = userRepository;
     }
 
+    public User findUserByEmail(String email){
+        return userRepository.findUserByEmail(email);
+    }
+
     public User createUser(User userObject){
         System.out.println("service calling createUser");
 
         if (!userRepository.existsByEmail(userObject.getEmail())){
-            //userObject.setPassword(passwordEncoder.encode(userObject.getPassword()));
+            userObject.setPassword(passwordEncoder.encode(userObject.getPassword()));
             return userRepository.save(userObject);
         } else {
             throw new InformationExistsException("user with email address " + userObject.getEmail() + " already exists.");
