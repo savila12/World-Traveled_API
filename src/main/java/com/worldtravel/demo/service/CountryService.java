@@ -1,5 +1,6 @@
 package com.worldtravel.demo.service;
 
+import com.worldtravel.demo.repository.AdventureRepository;
 import com.worldtravel.demo.repository.CountryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
