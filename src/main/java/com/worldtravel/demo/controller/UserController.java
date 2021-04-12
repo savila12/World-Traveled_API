@@ -1,12 +1,11 @@
 package com.worldtravel.demo.controller;
 
 import com.worldtravel.demo.model.User;
+import com.worldtravel.demo.model.loginRequest.LoginRequest;
 import com.worldtravel.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "/auth/users")
@@ -23,5 +22,11 @@ public class UserController {
     public User createUser(@RequestBody User userObject){
         System.out.println("calling createUser");
         return userService.createUser(userObject);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<Object> loginUser(@RequestBody LoginRequest loginRequest){
+        System.out.println("calling loginUser =====>");
+        return userService.loginUser(loginRequest);
     }
 }
