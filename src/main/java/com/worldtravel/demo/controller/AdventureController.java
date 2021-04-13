@@ -54,18 +54,20 @@ public class AdventureController {
         return adventureService.getCountries();
     }
 
+    //http://localhost:PORTNUMBER/api/ADVENTUREID/countries/COUNTRYID
     @GetMapping("/adventures/{adventureId}/countries/{countryId}")
     public Country getCountry(@PathVariable Long adventureId, @PathVariable Long countryId){
         System.out.println("calling getCountry =====>");
         return adventureService.getCountry(adventureId, countryId);
     }
-
+    //http://localhost:PORTNUMBER/api/ADVENTUREID
     @DeleteMapping("/adventures/{adventureId}")
     public Adventure deleteAdventure(@PathVariable Long adventureId){
         System.out.println("calling deleteAdventure ======>");
         return adventureService.deleteAdventure(adventureId);
     }
 
+    //http://localhost:PORTNUMBER/api/ADVENTUREID
     @PutMapping("/adventures/{adventureId}")
     public Adventure updateAdventure(@PathVariable Long adventureId, @RequestBody Adventure adventureObject){
         System.out.println("calling updateAdventure =====>");
