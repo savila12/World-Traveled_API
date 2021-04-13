@@ -26,9 +26,9 @@ public class AdventureController {
 
     //http://localhost:PORTNUMBER/api/adventures
     @GetMapping("/adventures")
-    public List<Adventure> getCountries (){
+    public List<Adventure> getAdventures (){
         System.out.println("calling getCountries =====>");
-        return adventureService.getCountries();
+        return adventureService.getAdventures();
     }
 
     //http://localhost:PORTNUMBER/api/adventures

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class AdventureService {
@@ -33,7 +34,7 @@ public class AdventureService {
         this.adventureRepository = adventureRepository;
     }
 
-    public List<Adventure> getCountries (){
+    public List<Adventure> getAdventures (){
         System.out.println("service calling getCountries =====>");
         MyUserDetails myUserDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         List<Adventure> adventureList = adventureRepository.findByUserId(myUserDetails.getUser().getId());
@@ -59,9 +60,18 @@ public class AdventureService {
             adventureObject.setCountry(adventureObject.getCountry());
             return adventureRepository.save(adventureObject);
         }
+    }
 
+    public List<Country> getCountries(){
+        MyUserDetails myUserDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        List<Country> countries = getAdventures().stream().map(adventure -> {
+            String countryName = adventure.getCountryName();
+            return countryRepository.findByName(countryName);
+        }).collect(Collectors.toList());
 
-
+        if(countries.isEmpty()){
+            throw new InformationNotFoundException("")
+        }
     }
 }
 

@@ -83,6 +83,10 @@ public class Adventure {
         return user;
     }
 
+    public void setUser(User user){
+        this.user = user;
+    }
+
     public Country getCountry() {
         return country;
     }
