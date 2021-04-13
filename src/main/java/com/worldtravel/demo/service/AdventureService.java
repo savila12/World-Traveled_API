@@ -10,6 +10,7 @@ import com.worldtravel.demo.security.MyUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
@@ -86,6 +87,19 @@ public class AdventureService {
         }
         else{
             return countries;
+        }
+    }
+
+    public Country getCountry(Long countryId){
+        System.out.println("calling getCountry =====>");
+        MyUserDetails myUserDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Country country = (Country) adventureRepository.findByUserIdAndCountryId(myUserDetails.getUser().getId(), countryId);
+
+        if(country == null){
+            throw new InformationNotFoundException("Country with id " + countryId + " not found");
+        }
+        else{
+            return country;
         }
     }
 }

@@ -32,6 +32,7 @@ public class AdventureController {
         return adventureService.getAdventures();
     }
 
+    //http://localhost:PORTNUMBER/api/adventures/1
     @GetMapping("/adventures/{adventureId}")
     public Adventure getAdventure(@PathVariable Long adventureId){
         System.out.println("calling getAdventure =====>");
@@ -50,6 +51,12 @@ public class AdventureController {
     public Set<Country> getCountries(){
         System.out.println("calling getCountries =====>");
         return adventureService.getCountries();
+    }
+
+    @GetMapping("/countries/{countryId}")
+    public Country getCountry(@PathVariable Long countryId){
+        System.out.println("calling getCountry =====>");
+        return adventureService.getCountry(countryId);
     }
 
 }
