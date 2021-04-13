@@ -48,7 +48,7 @@ public class AdventureService {
     public Adventure getAdventure(Long adventureId){
         System.out.println("calling getAdventure =====>");
         MyUserDetails myUserDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Adventure adventure = adventureRepository.findByIdAndUserId(adventureId, myUserDetails.getUser().getId());
+        Adventure adventure = adventureRepository.findByUserIdAndId(myUserDetails.getUser().getId(), adventureId);
         if(adventure == null){
             throw new InformationNotFoundException("Adventure with id " + adventureId + " not found");
         }
@@ -91,7 +91,7 @@ public class AdventureService {
     public Country getCountry(Long adventureId, Long countryId){
         System.out.println("calling getCountry =====>");
         MyUserDetails myUserDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Adventure adventure = adventureRepository.findByIdAndUserId(adventureId, myUserDetails.getUser().getId());
+        Adventure adventure = adventureRepository.findByUserIdAndId(myUserDetails.getUser().getId(), adventureId);
 
         if(adventure != null){
             Optional<Country> country = Optional.ofNullable(adventure.getCountry());

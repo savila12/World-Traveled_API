@@ -73,5 +73,4 @@ public class AdventureController {
         System.out.println("calling updateAdventure =====>");
         return adventureService.updateAdventure(adventureId, adventureObject);
     }
-
 }
