@@ -27,9 +27,6 @@ public class MyUserDetailsService implements UserDetailsService {
         this.adventureService = adventureService;
     }
 
-
-
-
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userService.findUserByEmail(email);

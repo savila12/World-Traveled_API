@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping(path = "/api")
@@ -37,4 +38,12 @@ public class AdventureController {
         System.out.println("calling createAdventure =====>");
         return adventureService.createAdventure(adventureObject);
     }
+
+    //http://localhost:PORTNUMBER/api/countries
+    @GetMapping("/countries")
+    public Set<Country> getCountries(){
+        System.out.println("calling getCountries =====>");
+        return adventureService.getCountries();
+    }
+
 }
