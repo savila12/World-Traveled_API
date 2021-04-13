@@ -10,8 +10,13 @@ import java.util.List;
 public interface AdventureRepository extends JpaRepository<Adventure, Long> {
 
     List<Adventure> findByCountryId(Long countryId);
-    List<Adventure> findByUserId(Long userId);
-    List<Adventure>findByUserIdAndCountryName(Long userId, String countryName);
+
+    List<Adventure>findByUserId(Long userId);
+
+    List<Adventure>findByUserIdAndCountryId(Long userId, Long countryId);
+
+    Adventure findByUserIdAndCountryName(Long userId, String countryName);
+
     Adventure findByAdventureNameAndUserId(String adventureName, Long userId);
 
 }

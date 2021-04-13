@@ -26,7 +26,6 @@ public class Adventure {
     private String countryName;
 
 
-
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "user_id")

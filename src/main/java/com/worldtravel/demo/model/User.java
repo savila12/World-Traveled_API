@@ -28,8 +28,12 @@ public class User {
     @JoinColumn(name = "profile_id", referencedColumnName = "id")
     private UserProfile userProfile;
 
-    @OneToMany(mappedBy = "user")
-    private Set<Adventure> adventures;
+    @ManyToMany
+    @JoinTable(
+            name = "adventures",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "country_id"))
+    private Set<Country> countryInAdventure;
 
     public User() {
     }
@@ -81,6 +85,14 @@ public class User {
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 '}';
+    }
+
+    public Set<Country> getCountryInAdventure() {
+        return countryInAdventure;
+    }
+
+    public void setAdventures(Set<Country> countryInAdventure) {
+        this.countryInAdventure = countryInAdventure;
     }
 }
 

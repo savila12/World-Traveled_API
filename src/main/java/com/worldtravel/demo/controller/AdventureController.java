@@ -24,15 +24,16 @@ public class AdventureController {
         return "Hello World";
     }
 
-    //http://localhost:PORTNUMBER/api/categories
+    //http://localhost:PORTNUMBER/api/adventures
     @GetMapping("/adventures")
     public List<Adventure> getCountries (){
         System.out.println("calling getCountries =====>");
         return adventureService.getCountries();
     }
 
+    //http://localhost:PORTNUMBER/api/adventures
     @PostMapping("/adventures")
-    public Adventure createAdventure(@RequestBody Adventure adventureObject){
+    public Adventure createAdventure( @RequestBody Adventure adventureObject){
         System.out.println("calling createAdventure =====>");
         return adventureService.createAdventure(adventureObject);
     }

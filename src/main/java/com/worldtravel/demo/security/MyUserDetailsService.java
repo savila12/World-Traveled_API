@@ -2,6 +2,7 @@ package com.worldtravel.demo.security;
 
 import com.worldtravel.demo.model.User;
 import com.worldtravel.demo.repository.UserRepository;
+import com.worldtravel.demo.service.AdventureService;
 import com.worldtravel.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,12 +14,20 @@ import org.springframework.stereotype.Service;
 public class MyUserDetailsService implements UserDetailsService {
 
     private UserService userService;
+    private AdventureService adventureService;
 
 
     @Autowired
     public void setUserService(UserService userService){
         this.userService = userService;
     }
+
+    @Autowired
+    public void setAdventureService(AdventureService adventureService){
+        this.adventureService = adventureService;
+    }
+
+
 
 
     @Override

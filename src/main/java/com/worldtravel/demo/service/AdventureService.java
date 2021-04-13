@@ -13,11 +13,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AdventureService {
     private CountryRepository countryRepository;
     private AdventureRepository adventureRepository;
+
+    @Autowired
+    CountryService countryService;
 
     @Autowired
     public void setCountryRepository(CountryRepository countryRepository){
@@ -33,8 +37,6 @@ public class AdventureService {
         System.out.println("service calling getCountries =====>");
         MyUserDetails myUserDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         List<Adventure> adventureList = adventureRepository.findByUserId(myUserDetails.getUser().getId());
-        //List<Country> countryList = (List<Country>) adventureRepository.findByUserId(myUserDetails.getUser().getId())
-                //.stream().filter(country -> country.getCountry() != null).map(Adventure::getCountry);
 
         if(adventureList.isEmpty()){
             throw new InformationNotFoundException("no adventures found for that user with id " + myUserDetails.getUser().getId());
@@ -44,19 +46,22 @@ public class AdventureService {
         }
     }
 
-    public Adventure createAdventure(Adventure adventureObject){
+    public Adventure createAdventure(Adventure adventureObject) {
         System.out.println("calling createAdventure =====>");
         MyUserDetails myUserDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Adventure adventure = (Adventure) adventureRepository.findByUserIdAndCountryName(myUserDetails.getUser().getId(), adventureObject.getCountryName());
+        Optional<Country> country = Optional.ofNullable(countryRepository.findByName(adventureObject.getCountryName()));
 
-        if(adventure != null){
-            throw new InformationExistsException("adventure with user id " + myUserDetails.getUser().getId() + " already exists");
+        if (!country.isPresent()) {
+            throw new InformationNotFoundException("Country with provided name " + adventureObject.getCountryName() + " is not found");
         }
-        if(countryRepository.findByName(adventureObject.getCountryName()) != null){
+        else{
+            adventureObject.setUser(myUserDetails.getUser());
+            adventureObject.setCountry(adventureObject.getCountry());
+            return adventureRepository.save(adventureObject);
+        }
 
-        }
-        else {
-            throw new InformationNotFoundException("country name does not exists");
-        }
+
+
     }
 }
+
