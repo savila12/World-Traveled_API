@@ -32,7 +32,11 @@ public class AdventureController {
         return adventureService.getAdventures();
     }
 
-    
+    @GetMapping("/adventures/{adventureId}")
+    public Adventure getAdventure(@PathVariable Long adventureId){
+        System.out.println("calling getAdventure =====>");
+        return adventureService.getAdventure(adventureId);
+    }
 
     //http://localhost:PORTNUMBER/api/adventures
     @PostMapping("/adventures")

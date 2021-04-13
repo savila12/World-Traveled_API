@@ -46,6 +46,19 @@ public class AdventureService {
         }
     }
 
+    public Adventure getAdventure(Long adventureId){
+        System.out.println("calling getAdventure =====>");
+        MyUserDetails myUserDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Adventure adventure = adventureRepository.findByIdAndUserId(adventureId, myUserDetails.getUser().getId());
+        if(adventure == null){
+            throw new InformationNotFoundException("Adventure with id " + adventureId + " not found");
+        }
+        else{
+            return adventure;
+        }
+
+    }
+
     public Adventure createAdventure(Adventure adventureObject) {
         System.out.println("calling createAdventure =====>");
         MyUserDetails myUserDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

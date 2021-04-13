@@ -18,5 +18,6 @@ public interface AdventureRepository extends JpaRepository<Adventure, Long> {
     Adventure findByUserIdAndCountryName(Long userId, String countryName);
 
     Adventure findByAdventureNameAndUserId(String adventureName, Long userId);
+    Adventure findByIdAndUserId(Long adventureId, Long userId);
 
 }
