@@ -33,7 +33,6 @@ public class AdventureService {
         this.adventureRepository = adventureRepository;
     }
 
-
     public List<Adventure> getAdventures (){
         System.out.println("service calling getCountries =====>");
         MyUserDetails myUserDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -70,7 +69,7 @@ public class AdventureService {
         }
         else{
             adventureObject.setUser(myUserDetails.getUser());
-            adventureObject.setCountry(adventureObject.getCountry());
+            adventureObject.setCountry(country.get());
             return adventureRepository.save(adventureObject);
         }
     }
@@ -90,16 +89,23 @@ public class AdventureService {
         }
     }
 
-    public Country getCountry(Long countryId){
+    public Country getCountry(Long adventureId, Long countryId){
         System.out.println("calling getCountry =====>");
         MyUserDetails myUserDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Country country = (Country) adventureRepository.findByUserIdAndCountryId(myUserDetails.getUser().getId(), countryId);
+        Adventure adventure = adventureRepository.findByIdAndUserId(adventureId, myUserDetails.getUser().getId());
 
-        if(country == null){
-            throw new InformationNotFoundException("Country with id " + countryId + " not found");
+        if(adventure != null){
+           // Optional<Country> country = countryRepository.findById(countryId); //.stream().filter(c -> c.getId().equals(countryId)).findFirst();
+            Optional<Country> country = Optional.ofNullable(adventure.getCountry());
+            if(country.isPresent()){
+                return country.get();
+            }
+            else{
+                throw new InformationNotFoundException("Adventure with id " + adventureId + " not found");
+            }
         }
         else{
-            return country;
+            throw new InformationNotFoundException("Country with id " + countryId + " not found");
         }
     }
 }

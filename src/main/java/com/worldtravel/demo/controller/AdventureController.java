@@ -53,10 +53,10 @@ public class AdventureController {
         return adventureService.getCountries();
     }
 
-    @GetMapping("/countries/{countryId}")
-    public Country getCountry(@PathVariable Long countryId){
+    @GetMapping("/adventures/{adventureId}/countries/{countryId}")
+    public Country getCountry(@PathVariable Long adventureId, @PathVariable Long countryId){
         System.out.println("calling getCountry =====>");
-        return adventureService.getCountry(countryId);
+        return adventureService.getCountry(adventureId, countryId);
     }
 
 }
