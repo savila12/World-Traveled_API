@@ -90,6 +90,14 @@ public class User {
     public void setAdventures(Set<Adventure> adventures) {
         this.adventures = adventures;
     }
+
+    public UserProfile getUserProfile() {
+        return userProfile;
+    }
+
+    public void setUserProfile(UserProfile userProfile) {
+        this.userProfile = userProfile;
+    }
 }
 
 

@@ -31,7 +31,7 @@ public class UserProfileService {
         if(myUserDetails.getUser().getUserProfile() != null){
             throw new InformationExistsException("user profile already exists");
         }
-        myUserDetails.getUser().setUser(userProfileObject);
+        myUserDetails.getUser().setUserProfile(userProfileObject);
         userRepository.save(myUserDetails.getUser());
         return "Profile created Successfully";
     }
