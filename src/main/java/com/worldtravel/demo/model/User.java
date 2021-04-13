@@ -28,12 +28,8 @@ public class User {
     @JoinColumn(name = "profile_id", referencedColumnName = "id")
     private UserProfile userProfile;
 
-    @ManyToMany
-    @JoinTable(
-            name = "adventures",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "country_id"))
-    private Set<Country> countryInAdventure;
+   @OneToMany(mappedBy = "user")
+    private  Set<Adventure> adventures;
 
     public User() {
     }
@@ -87,12 +83,12 @@ public class User {
                 '}';
     }
 
-    public Set<Country> getCountryInAdventure() {
-        return countryInAdventure;
+    public Set<Adventure> getAdventures() {
+        return adventures;
     }
 
-    public void setAdventures(Set<Country> countryInAdventure) {
-        this.countryInAdventure = countryInAdventure;
+    public void setAdventures(Set<Adventure> adventures) {
+        this.adventures = adventures;
     }
 }
 
