@@ -10,8 +10,7 @@ import com.worldtravel.demo.security.MyUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
+
 
 import java.util.List;
 import java.util.Optional;
@@ -95,7 +94,6 @@ public class AdventureService {
         Adventure adventure = adventureRepository.findByIdAndUserId(adventureId, myUserDetails.getUser().getId());
 
         if(adventure != null){
-           // Optional<Country> country = countryRepository.findById(countryId); //.stream().filter(c -> c.getId().equals(countryId)).findFirst();
             Optional<Country> country = Optional.ofNullable(adventure.getCountry());
             if(country.isPresent()){
                 return country.get();
@@ -108,5 +106,44 @@ public class AdventureService {
             throw new InformationNotFoundException("Country with id " + countryId + " not found");
         }
     }
+
+    public Adventure deleteAdventure(Long adventureId){
+        System.out.println("service calling deleteAdventure =====>");
+        MyUserDetails myUserDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        Adventure adventure = adventureRepository.findByUserIdAndId(myUserDetails.getUser().getId(), adventureId);
+        if(adventure == null){
+            throw new InformationNotFoundException("Adventure with id " + adventureId + " not found");
+        }
+        else{
+            adventureRepository.deleteById(adventureId);
+            return adventure;
+        }
+    }
+
+    public Adventure updateAdventure(Long adventureId, Adventure adventureObject){
+        System.out.println();
+        MyUserDetails myUserDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Adventure adventure = adventureRepository.findByUserIdAndId(myUserDetails.getUser().getId(), adventureId);
+        Optional<Country> country = Optional.ofNullable(countryRepository.findByName(adventureObject.getCountryName()));
+        if(adventure == null){
+            throw new InformationNotFoundException("No adventure with id " + adventureId + " found");
+        }
+        else{
+            if(!country.isPresent()){
+                throw new InformationNotFoundException("No country with name " + adventureObject.getCountryName() + " found");
+            }
+            else{
+                adventure.setDateWent(adventureObject.getDateWent());
+                adventure.setAdventureName(adventureObject.getAdventureName());
+                adventure.setCountry(country.get());
+                adventure.setCountryName(adventureObject.getCountryName());
+                adventure.setUser(myUserDetails.getUser());
+                adventure.setAdventureDescription(adventureObject.getAdventureDescription());
+                return adventureRepository.save(adventure);
+            }
+        }
+    }
+
 }
 

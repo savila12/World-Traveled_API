@@ -59,4 +59,12 @@ public class AdventureController {
         return adventureService.getCountry(adventureId, countryId);
     }
 
+    @DeleteMapping("/adventures/{adventureId}")
+    public Adventure deleteAdventure(@PathVariable Long adventureId){
+        System.out.println("calling deleteAdventure ======>");
+        return adventureService.deleteAdventure(adventureId);
+    }
+
+    @PutMapping("/adventures/{adventureId}")
+
 }
