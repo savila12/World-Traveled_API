@@ -23,9 +23,6 @@ public class AdventureService {
     private AdventureRepository adventureRepository;
 
     @Autowired
-    CountryService countryService;
-
-    @Autowired
     public void setCountryRepository(CountryRepository countryRepository){
         this.countryRepository = countryRepository;
     }
@@ -34,6 +31,7 @@ public class AdventureService {
     public void setAdventureRepository(AdventureRepository adventureRepository){
         this.adventureRepository = adventureRepository;
     }
+
 
     public List<Adventure> getAdventures (){
         System.out.println("service calling getCountries =====>");

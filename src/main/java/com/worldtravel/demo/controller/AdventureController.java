@@ -32,9 +32,11 @@ public class AdventureController {
         return adventureService.getAdventures();
     }
 
+    
+
     //http://localhost:PORTNUMBER/api/adventures
     @PostMapping("/adventures")
-    public Adventure createAdventure( @RequestBody Adventure adventureObject){
+    public Adventure createAdventure(@RequestBody Adventure adventureObject){
         System.out.println("calling createAdventure =====>");
         return adventureService.createAdventure(adventureObject);
     }

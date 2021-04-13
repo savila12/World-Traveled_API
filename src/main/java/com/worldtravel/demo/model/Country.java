@@ -19,8 +19,9 @@ public class Country {
     @Column
     private String name;
 
-    @ManyToMany(mappedBy = "countryInAdventure")
-    private List<User> userInAdventure;
+    @OneToMany(mappedBy = "country", orphanRemoval = true)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Adventure> adventureList;
 
 
 
@@ -57,11 +58,11 @@ public class Country {
     }
 
 
-    public List<User> getUserInAdventure() {
-        return userInAdventure;
-    }
+//    public List<Adventure> getAdventureList() {
+//        return adventureList;
+//    }
 
-    public void setAdventureList(List<User> userInAdventure) {
-        this.userInAdventure = userInAdventure;
+    public void setAdventureList(List<Adventure> adventureList) {
+        this.adventureList = adventureList;
     }
 }
