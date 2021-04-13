@@ -1,8 +1,10 @@
 package com.worldtravel.demo.repository;
 
+import com.worldtravel.demo.model.UserProfile;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserProfileRepository {
+public interface UserProfileRepository extends JpaRepository<UserProfile, Long> {
 
 }
