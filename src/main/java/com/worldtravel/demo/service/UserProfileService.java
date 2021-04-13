@@ -45,8 +45,8 @@ public class UserProfileService {
         Optional<User> currentUser = userRepository.findById(myUserDetails.getUser().getId());
         if(currentUser.isPresent()){
             UserProfile userProfile = currentUser.get().getUserProfile();
-            userProfile.setFirstName(userProfile.getFirstName());
-            userProfile.setLastName(userProfile.getLastName());
+            userProfile.setFirstName(userProfileObject.getFirstName());
+            userProfile.setLastName(userProfileObject.getLastName());
             userProfile.setProfileDescription(userProfileObject.getProfileDescription());
             currentUser.get().setUserProfile(userProfile);
             userProfileRepository.save(userProfile);
