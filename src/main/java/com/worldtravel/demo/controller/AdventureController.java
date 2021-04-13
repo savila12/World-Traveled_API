@@ -2,6 +2,7 @@ package com.worldtravel.demo.controller;
 
 import com.worldtravel.demo.model.Adventure;
 import com.worldtravel.demo.model.Country;
+import com.worldtravel.demo.repository.AdventureRepository;
 import com.worldtravel.demo.service.AdventureService;
 import com.worldtravel.demo.service.CountryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,5 +67,9 @@ public class AdventureController {
     }
 
     @PutMapping("/adventures/{adventureId}")
+    public Adventure updateAdventure(@PathVariable Long adventureId, @RequestBody Adventure adventureObject){
+        System.out.println("calling updateAdventure =====>");
+        return adventureService.updateAdventure(adventureId, adventureObject);
+    }
 
 }
