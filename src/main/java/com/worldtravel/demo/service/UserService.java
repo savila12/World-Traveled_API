@@ -78,6 +78,6 @@ public class UserService {
             userRepository.save(currentUser);
             return "Password successfully updated.";
         }
-        return "Error";
+        return "Error updating the password";
     }
 }
