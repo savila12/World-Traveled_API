@@ -2,9 +2,7 @@ package com.worldtravel.demo.controller;
 
 import com.worldtravel.demo.model.Adventure;
 import com.worldtravel.demo.model.Country;
-import com.worldtravel.demo.repository.AdventureRepository;
 import com.worldtravel.demo.service.AdventureService;
-import com.worldtravel.demo.service.CountryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -50,16 +48,13 @@ public class AdventureController {
         return adventureService.getCountries();
     }
 
-<<<<<<< HEAD
-    //http://localhost:PORTNUMBER/api/ADVENTUREID/countries
-=======
     //http://localhost:PORTNUMBER/api/adventures/ADVENTUREID/countries
->>>>>>> fb77e84e5bcd02951d89db9be13b1e4adf26d10c
     @GetMapping("/adventures/{adventureId}/countries")
     public Country getCountry(@PathVariable Long adventureId){
         System.out.println("calling getCountry =====>");
         return adventureService.getCountry(adventureId);
     }
+
     //http://localhost:PORTNUMBER/api/ADVENTUREID
     @DeleteMapping("/adventures/{adventureId}")
     public Adventure deleteAdventure(@PathVariable Long adventureId){
