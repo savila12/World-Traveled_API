@@ -88,7 +88,7 @@ public class AdventureService {
         }
     }
 
-    public Country getCountry(Long adventureId, Long countryId){
+    public Country getCountry(Long adventureId){
         System.out.println("calling getCountry =====>");
         MyUserDetails myUserDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Adventure adventure = adventureRepository.findByUserIdAndId(myUserDetails.getUser().getId(), adventureId);
@@ -103,7 +103,7 @@ public class AdventureService {
             }
         }
         else{
-            throw new InformationNotFoundException("Country with id " + countryId + " not found");
+            throw new InformationNotFoundException("Country not found");
         }
     }
 
