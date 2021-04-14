@@ -7,10 +7,12 @@ import com.worldtravel.demo.model.loginRequest.LoginRequest;
 import com.worldtravel.demo.model.response.LoginResponse;
 import com.worldtravel.demo.repository.UserRepository;
 import com.worldtravel.demo.security.JWTUtils;
+import com.worldtravel.demo.security.MyUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -65,5 +67,17 @@ public class UserService {
         }catch(NullPointerException e){
             throw new InformationNotFoundException("user with email address " + loginRequest.getEmail() + " not found");
         }
+    }
+
+    public String updatePassword(String newPassword){
+        System.out.println("calling updatePassword ==>");
+        MyUserDetails myUserDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User currentUser = userRepository.findUserByEmail(myUserDetails.getUser().getEmail());
+        if (currentUser != null){
+            currentUser.setPassword(passwordEncoder.encode(newPassword));
+            userRepository.save(currentUser);
+            return "Password successfully updated.";
+        }
+        return "Error";
     }
 }
