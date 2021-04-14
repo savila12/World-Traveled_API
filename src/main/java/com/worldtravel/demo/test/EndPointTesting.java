@@ -8,6 +8,4 @@ public class EndPointTesting {
 
     @Test
     public void contextLoads(){}
-    
-
 }
