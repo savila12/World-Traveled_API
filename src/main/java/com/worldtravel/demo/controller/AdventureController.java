@@ -21,10 +21,6 @@ public class AdventureController {
         this.adventureService = adventureService;
     }
 
-    @GetMapping("/hello")
-    public String helloWorld(){
-        return "Hello World";
-    }
 
     //http://localhost:PORTNUMBER/api/adventures
     @GetMapping("/adventures")

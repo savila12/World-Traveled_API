@@ -7,10 +7,12 @@ import com.worldtravel.demo.model.loginRequest.LoginRequest;
 import com.worldtravel.demo.model.response.LoginResponse;
 import com.worldtravel.demo.repository.UserRepository;
 import com.worldtravel.demo.security.JWTUtils;
+import com.worldtravel.demo.security.MyUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -43,7 +45,7 @@ public class UserService {
     }
 
     public User createUser(User userObject){
-        System.out.println("service calling createUser");
+        System.out.println("service calling createUser =====>");
 
         if (!userRepository.existsByEmail(userObject.getEmail())){
             userObject.setPassword(passwordEncoder.encode(userObject.getPassword()));
@@ -66,4 +68,6 @@ public class UserService {
             throw new InformationNotFoundException("user with email address " + loginRequest.getEmail() + " not found");
         }
     }
+
+
 }
