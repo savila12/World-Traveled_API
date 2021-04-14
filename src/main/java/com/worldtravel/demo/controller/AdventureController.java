@@ -54,7 +54,7 @@ public class AdventureController {
         return adventureService.getCountries();
     }
 
-    //http://localhost:PORTNUMBER/api/ADVENTUREID/countries/COUNTRYID
+    //http://localhost:PORTNUMBER/api/adventures/ADVENTUREID/countries/COUNTRYID
     @GetMapping("/adventures/{adventureId}/countries/{countryId}")
     public Country getCountry(@PathVariable Long adventureId, @PathVariable Long countryId){
         System.out.println("calling getCountry =====>");
