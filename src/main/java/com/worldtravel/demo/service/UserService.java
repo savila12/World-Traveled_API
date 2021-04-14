@@ -80,4 +80,16 @@ public class UserService {
         }
         return "Error updating the password";
     }
+
+    public String updateEmail(String newEmail){
+        MyUserDetails myUserDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User currentUser = myUserDetails.getUser();
+        if (currentUser.getEmail().equals(newEmail)){
+            throw new InformationExistsException("The submitted email matches the curent email address on file.");
+        } else {
+            currentUser.setEmail(newEmail);
+            userRepository.save(currentUser);
+            return "Email updated successfully";
+        }
+    }
 }
