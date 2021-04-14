@@ -29,4 +29,11 @@ public class UserController {
         System.out.println("calling loginUser =====>");
         return userService.loginUser(loginRequest);
     }
+
+    //http://localhost:9092/auth/users/reset
+    @PutMapping("/reset")
+    public String updatePassword(@RequestBody String newPassword){
+        System.out.println("calling updatePassword ==>");
+        return userService.updatePassword(newPassword);
+    }
 }

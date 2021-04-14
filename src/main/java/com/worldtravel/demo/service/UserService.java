@@ -69,5 +69,15 @@ public class UserService {
         }
     }
 
-
+    public String updatePassword(String newPassword){
+        System.out.println("calling updatePassword ==>");
+        MyUserDetails myUserDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User currentUser = userRepository.findUserByEmail(myUserDetails.getUser().getEmail());
+        if (currentUser != null){
+            currentUser.setPassword(passwordEncoder.encode(newPassword));
+            userRepository.save(currentUser);
+            return "Password successfully updated.";
+        }
+        return "Error";
+    }
 }
