@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.worldtravel.demo.model.User;
 import com.worldtravel.demo.model.loginRequest.LoginRequest;
 import com.worldtravel.demo.security.MyUserDetails;
+import com.worldtravel.demo.security.MyUserDetailsService;
 import com.worldtravel.demo.security.WithMockCustomUser;
 import com.worldtravel.demo.service.AdventureService;
 import com.worldtravel.demo.service.UserService;
@@ -13,6 +14,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -23,18 +25,27 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.test.context.support.WithUserDetails;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MockMvcBuilder;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.awt.*;
 import java.io.IOException;
@@ -48,9 +59,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 //@ExtendWith(MockitoExtension.class)
 @SpringBootTest
 @AutoConfigureMockMvc
+@RunWith(SpringJUnit4ClassRunner.class)
 class UserControllerTest {
+    static ApplicationContext applicationContext = null;
+
     @MockBean
     private UserService userService;
+
+    @Autowired
+    MyUserDetailsService myUserDetailsService;
+
 
     private User user;
 
@@ -63,10 +81,13 @@ class UserControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
+    @Autowired
+    private WebApplicationContext webApplicationContext;
+
     @BeforeEach
     public void setup(){
         user = new User(1L, "jenjanik", "jen@scuz.com", "123456");
-        mockMvc = MockMvcBuilders.standaloneSetup(userController).build();
+        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
     }
 
     @AfterEach
@@ -94,11 +115,13 @@ class UserControllerTest {
 
 
     @Test
-    @WithMockUser(username = "jslkl@sl.com", password = "123456")
+    //@WithMockUser(username = "jslkl@sl.com", password = "123456")
     void loginUser() throws Exception{
+        ResponseEntity<Object> response = new ResponseEntity<>(HttpStatus.OK);
+        when(userService.loginUser(any())).thenReturn(response);
         mockMvc.perform(post("/auth/users/login")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+               .contentType(MediaType.APPLICATION_JSON).content(mapToJson(user)))
+               .andExpect(status().isOk());
     }
 
     @Test
