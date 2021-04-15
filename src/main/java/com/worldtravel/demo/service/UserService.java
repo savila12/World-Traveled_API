@@ -45,7 +45,7 @@ public class UserService {
     }
 
     public User createUser(User userObject){
-        System.out.println("service calling createUser");
+        System.out.println("service calling createUser =====>");
 
         if (!userRepository.existsByEmail(userObject.getEmail())){
             userObject.setPassword(passwordEncoder.encode(userObject.getPassword()));
