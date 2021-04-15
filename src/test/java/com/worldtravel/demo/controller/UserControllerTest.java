@@ -54,6 +54,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 //@ExtendWith(MockitoExtension.class)
@@ -125,7 +126,13 @@ class UserControllerTest {
     }
 
     @Test
-    void updatePassword() {
+    void updatePassword() throws Exception{
+        String response  = "update successful";
+        when(userService.updatePassword(any())).thenReturn(response);
+        mockMvc.perform((put("/auth/users/reset")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapToJson(user))))
+                .andExpect(status().isOk());
     }
 
     @Test
