@@ -50,8 +50,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.doubleThat;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -186,7 +185,12 @@ class AdventureControllerTest {
     }
 
     @Test
-    void deleteAdventure() {
+    void deleteAdventure() throws Exception{
+        when(adventureService.deleteAdventure(adventureList.get(0).getId())).thenReturn(adventure1);
+        mockMvc.perform(delete("/api/adventures/{adventureId}", 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapToJson(adventure1)))
+                .andExpect(status().isOk());
     }
 
     @Test
