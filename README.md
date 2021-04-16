@@ -1,4 +1,4 @@
-# A World Well Traveled
+# A World Well Traveled: An Overview
 
 This is the backend for a World Traveled tracking application. It allows users to create a new custom adventure as well as see past travels. We've created various endpoints that will allow users to view and manipulate the data stored in the database at their leisure. We use authentication to ensure that all adventures are only visible to each individual user once they are logged in. 
 
@@ -75,3 +75,10 @@ PUT | Private | http://localhost:9092/auth/users/reset | Updates the User passwo
 POST | Private | http://localhost:9092/auth/api/profile | Creates a UserProfile
 PUT | Private | http://localhost:9092/auth/api/profile | Updates a UserProfile
 PUT | Private | http://localhost:9092/auth/users/email | Allows user to update their email address
+
+## Major Milestones
+1. Mocking up ERD and determining how the tables will relate to one another.
+2. Setting up the Many to Many relationship between **User** and **Country**. We always knew we wanted to allow multiple users to visit multiple countries, and a country to be able to be visited by many users. There are several different ways to emulate a Many to Many relationship within a relational database and we tried a few different scenarios before deciding on having the **Adventure** class be the link that tied each together. In theory, this was straight-forward. Getting the code to work in Spring Boot was a different story, which leads me to...
+3. Properly coding the Many to Many relationship in Spring Boot! This allowed us to make progress on creating the endpoints for our users.
+4. Implementing unit/integration tests within the API. This is a still a work in progress, but we were able to implement some @Test methods to test our UserController.
+
