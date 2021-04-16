@@ -34,6 +34,7 @@ import java.util.HashMap;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -65,7 +66,10 @@ public class UserProfileControllerTest {
     @BeforeEach
     public void setUp(){
         userProfile = new UserProfile(2L, "Sidney", "Avila", "My profile");
-        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+        mockMvc = MockMvcBuilders
+                .webAppContextSetup(webApplicationContext)
+                .apply(springSecurity())
+                .build();
     }
 
     @AfterEach
@@ -83,16 +87,13 @@ public class UserProfileControllerTest {
     public void createUserProfileTest() throws Exception{
         //ResponseEntity<HashMap> response = new ResponseEntity<>(HttpStatus.OK);
         //MyUserDetails myUserDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        String response = "Profile created Successfully";
-//        when(userProfileService.createUserProfile(any())).thenReturn(response);
-//        mockMvc.perform(post("/auth/api/profile")
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .content(mapToJson(userProfile)))
-//                .andExpect(status().isOk());
+        String response = "Profile created Successfully";
+        when(userProfileService.createUserProfile(any())).thenReturn(response);
+        mockMvc.perform(post("/auth/api/profile")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapToJson(userProfile)))
+                .andExpect(status().isOk());
 
-        ResponseEntity<String> result = template.withBasicAuth("Sidney", "password")
-                .getForEntity("/auth/api/profile", String.class);
-        assertEquals(HttpStatus.OK, result.getStatusCode());
     }
 
 }
