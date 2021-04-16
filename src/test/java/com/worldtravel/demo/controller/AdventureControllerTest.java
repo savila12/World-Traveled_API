@@ -36,11 +36,14 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.hamcrest.collection.IsCollectionWithSize.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.doubleThat;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -67,6 +70,7 @@ class AdventureControllerTest {
     private Country mexico;
     private Country germany;
     private List<Adventure> adventureList;
+    private List<Country> countryList;
 
     @InjectMocks
     private AdventureController adventureController;
@@ -84,8 +88,11 @@ class AdventureControllerTest {
     @BeforeEach
     public void setup(){
         user = new User(1L, "jenjanik", "jen@scuz.com", "123456");
+        countryList = new ArrayList<>();
         mexico = new Country(1L, "Mexico");
         germany = new Country(2L, "Germany");
+        countryList.add(mexico);
+        countryList.add(germany);
         adventureList = new ArrayList<>();
         adventure1 = new Adventure(1L, "Adventure 1", "12/1/20", "Fun trip to Mexico", "Mexico");
         adventure2 = new Adventure(1L, "Adventure 2", "12/1/21", "Fun trip to Germany", "Germany");
@@ -108,13 +115,6 @@ class AdventureControllerTest {
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.writeValueAsString(object);
     }
-
-    private<T> T mapFromJson(String json, Class<T> clazz) throws Exception{
-
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(json, clazz);
-    }
-
 
     //TODO: Ask Suresh, Thiago, and Marc if this is actually utilizing the controller since I'm creating adventureList and passing it in .thenReturn() below
     @Test
@@ -157,7 +157,20 @@ class AdventureControllerTest {
     }
 
     @Test
-    void getCountries() {
+    void getCountries() throws Exception{
+        Set<Country> distinctCountries = new HashSet<Country>();
+        Country brazil = new Country(3L, "Brazil");
+        Country france = new Country(5L, "France");
+        distinctCountries.add(mexico);
+        distinctCountries.add(germany);
+        distinctCountries.add(brazil);
+        distinctCountries.add(france);
+
+        when(adventureService.getCountries()).thenReturn(distinctCountries);
+        mockMvc.perform(get("/api/countries")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapToJson(distinctCountries)))
+                .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     @Test
