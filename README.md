@@ -83,3 +83,9 @@ PUT | Private | http://localhost:9092/auth/users/email | Allows user to update t
 4. Implementing security and authentication measures.
 5. Implementing unit/integration tests within the API. This is a still a work in progress, but we were able to implement some @Test methods to test our UserController.
 
+## Future Installments
+- Completing unit/integration testing for all repositories, controllers, and services
+- Adding front end
+
+## Questions? Comments? Concerns?
+Please feel free to reach out to us at **Sidney email** or jenmjanik@gmail.com.
