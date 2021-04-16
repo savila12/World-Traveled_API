@@ -123,10 +123,12 @@ class UserControllerTest {
                .andExpect(status().isOk());
     }
 
+    //TODO finish test
     @Test
     void updatePassword() {
     }
 
+    //TODO finish test
     @Test
     void updateEmail() {
     }
