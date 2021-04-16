@@ -25,8 +25,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.util.HashMap;
@@ -85,8 +84,6 @@ public class UserProfileControllerTest {
     @Test
     @WithMockUser("Sidney")
     public void createUserProfileTest() throws Exception{
-        //ResponseEntity<HashMap> response = new ResponseEntity<>(HttpStatus.OK);
-        //MyUserDetails myUserDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String response = "Profile created Successfully";
         when(userProfileService.createUserProfile(any())).thenReturn(response);
         mockMvc.perform(post("/auth/api/profile")

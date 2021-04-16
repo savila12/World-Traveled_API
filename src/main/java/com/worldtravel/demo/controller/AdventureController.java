@@ -55,7 +55,7 @@ public class AdventureController {
         return adventureService.getCountry(adventureId);
     }
 
-    //http://localhost:PORTNUMBER/api/ADVENTUREID
+    //http://localhost:PORTNUMBER/api/adventures/ADVENTUREID
     @DeleteMapping("/adventures/{adventureId}")
     public Adventure deleteAdventure(@PathVariable Long adventureId){
         System.out.println("calling deleteAdventure ======>");
