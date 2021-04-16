@@ -28,7 +28,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultMatcher;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
@@ -107,6 +109,13 @@ class AdventureControllerTest {
         return objectMapper.writeValueAsString(object);
     }
 
+    private<T> T mapFromJson(String json, Class<T> clazz) throws Exception{
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.readValue(json, clazz);
+    }
+
+
     //TODO: Ask Suresh, Thiago, and Marc if this is actually utilizing the controller since I'm creating adventureList and passing it in .thenReturn() below
     @Test
     void getAdventures() throws Exception{
@@ -125,16 +134,26 @@ class AdventureControllerTest {
 
     @Test
     void getAdventure() throws Exception{
-        when(adventureService.getAdventure(any())).thenReturn(adventure1);
-        mockMvc.perform(get("/api/adventures/{id}", 1).
-                contentType(MediaType.APPLICATION_JSON).
-                content(mapToJson(adventure1))).
-                andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(jsonPath("$.id").value(1)).andDo(print());
+        MvcResult mvcResult =  mockMvc.perform(MockMvcRequestBuilders.get("/api/adventures/{id}", 1)
+                .accept(MediaType.APPLICATION_JSON)).andReturn();
+        int status = mvcResult.getResponse().getStatus();
+        assertEquals(200, status);
+        //TODO The below code "works"
+//        when(adventureService.getAdventure(any())).thenReturn(adventure1);
+//        mockMvc.perform(get("/api/adventures/{id}", 1).
+//                contentType(MediaType.APPLICATION_JSON).
+//                content(mapToJson(adventure1))).
+//                andExpect(MockMvcResultMatchers.status().isOk())
+//                .andExpect(jsonPath("$.id").value(1)).andDo(print());
     }
 
     @Test
-    void createAdventure() {
+    void createAdventure() throws Exception{
+        when(adventureService.createAdventure(any())).thenReturn(adventure1);
+        mockMvc.perform(post("/api/adventures")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapToJson(adventure1)))
+                .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     @Test
