@@ -4,8 +4,11 @@ import com.worldtravel.demo.model.Adventure;
 import com.worldtravel.demo.model.Country;
 import com.worldtravel.demo.service.AdventureService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
@@ -55,14 +58,17 @@ public class AdventureController {
         return adventureService.getCountry(adventureId);
     }
 
-    //http://localhost:PORTNUMBER/api/ADVENTUREID
+    //http://localhost:PORTNUMBER/api/adventures/ADVENTUREID
     @DeleteMapping("/adventures/{adventureId}")
-    public Adventure deleteAdventure(@PathVariable Long adventureId){
+    public ResponseEntity<HashMap> deleteAdventure(@PathVariable Long adventureId){
         System.out.println("calling deleteAdventure ======>");
-        return adventureService.deleteAdventure(adventureId);
+        String status = adventureService.deleteAdventure(adventureId);
+        HashMap message = new HashMap();
+        message.put("message", status);
+        return new ResponseEntity<HashMap>(message, HttpStatus.OK);
     }
 
-    //http://localhost:PORTNUMBER/api/ADVENTUREID
+    //http://localhost:PORTNUMBER/api/adventures/ADVENTUREID
     @PutMapping("/adventures/{adventureId}")
     public Adventure updateAdventure(@PathVariable Long adventureId, @RequestBody Adventure adventureObject){
         System.out.println("calling updateAdventure =====>");

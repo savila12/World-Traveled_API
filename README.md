@@ -85,7 +85,8 @@ PUT | Private | http://localhost:9092/auth/users/email | Allows user to update t
 
 ## Future Installments
 - Completing unit/integration testing for all repositories, controllers, and services
+- Allowing users to show their adventures if they chose
 - Adding front end
 
 ## Questions? Comments? Concerns?
-Please feel free to reach out to us at **Sidney email** or jenmjanik@gmail.com.
+Please feel free to reach out to us at **savila1212@gmail.com** or **jenmjanik@gmail.com**.

@@ -1,6 +1,5 @@
 package com.worldtravel.demo.service;
 
-import com.worldtravel.demo.exception.InformationExistsException;
 import com.worldtravel.demo.exception.InformationNotFoundException;
 import com.worldtravel.demo.model.Adventure;
 import com.worldtravel.demo.model.Country;
@@ -46,7 +45,7 @@ public class AdventureService {
     }
 
     public Adventure getAdventure(Long adventureId){
-        System.out.println("calling getAdventure =====>");
+        System.out.println("service calling getAdventure =====>");
         MyUserDetails myUserDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Adventure adventure = adventureRepository.findByUserIdAndId(myUserDetails.getUser().getId(), adventureId);
         if(adventure == null){
@@ -59,7 +58,7 @@ public class AdventureService {
     }
 
     public Adventure createAdventure(Adventure adventureObject) {
-        System.out.println("calling createAdventure =====>");
+        System.out.println("service calling createAdventure =====>");
         MyUserDetails myUserDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Optional<Country> country = Optional.ofNullable(countryRepository.findByName(adventureObject.getCountryName()));
 
@@ -74,6 +73,7 @@ public class AdventureService {
     }
 
     public Set<Country> getCountries(){
+        System.out.println("service calling getCountries =====>");
         MyUserDetails myUserDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Set<Country> countries = getAdventures().stream().map(adventure -> {
             String countryName = adventure.getCountryName();
@@ -89,7 +89,7 @@ public class AdventureService {
     }
 
     public Country getCountry(Long adventureId){
-        System.out.println("calling getCountry =====>");
+        System.out.println("service calling getCountry =====>");
         MyUserDetails myUserDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Adventure adventure = adventureRepository.findByUserIdAndId(myUserDetails.getUser().getId(), adventureId);
 
@@ -107,7 +107,7 @@ public class AdventureService {
         }
     }
 
-    public Adventure deleteAdventure(Long adventureId){
+    public String deleteAdventure(Long adventureId){
         System.out.println("service calling deleteAdventure =====>");
         MyUserDetails myUserDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
@@ -117,12 +117,12 @@ public class AdventureService {
         }
         else{
             adventureRepository.deleteById(adventureId);
-            return adventure;
+            return "Deleted Successfully";
         }
     }
 
     public Adventure updateAdventure(Long adventureId, Adventure adventureObject){
-        System.out.println();
+        System.out.println("service calling updateAdventure =====>");
         MyUserDetails myUserDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Adventure adventure = adventureRepository.findByUserIdAndId(myUserDetails.getUser().getId(), adventureId);
         Optional<Country> country = Optional.ofNullable(countryRepository.findByName(adventureObject.getCountryName()));

@@ -18,12 +18,14 @@ public class UserController {
         this.userService = userService;
     }
 
+    //http://localhost:9092/auth/users/register
     @PostMapping("/register")
     public User createUser(@RequestBody User userObject){
         System.out.println("calling createUser");
         return userService.createUser(userObject);
     }
 
+    //http://localhost:9092/auth/users/login
     @PostMapping("/login")
     public ResponseEntity<Object> loginUser(@RequestBody LoginRequest loginRequest){
         System.out.println("calling loginUser =====>");
