@@ -113,17 +113,7 @@ class UserControllerTest {
                 andExpect(MockMvcResultMatchers.status().isOk());
     }
 
-
     @Test
-<<<<<<< HEAD
-    void loginUser() throws Exception{
-        ResponseEntity<Object> response = new ResponseEntity<>(HttpStatus.OK);
-
-        when(userService.loginUser(any())).thenReturn(response);
-        mockMvc.perform(post("/auth/users/login")
-                .contentType(MediaType.APPLICATION_JSON).content(mapToJson(user)))
-                .andExpect(status().isOk());
-=======
     //@WithMockUser(username = "jslkl@sl.com", password = "123456")
     void loginUser() throws Exception{
         ResponseEntity<Object> response = new ResponseEntity<>(HttpStatus.OK);
@@ -131,7 +121,6 @@ class UserControllerTest {
         mockMvc.perform(post("/auth/users/login")
                .contentType(MediaType.APPLICATION_JSON).content(mapToJson(user)))
                .andExpect(status().isOk());
->>>>>>> b9c2114b25ae059e3a36c3d66023cd295d671390
     }
 
     @Test
