@@ -31,7 +31,7 @@ public class AdventureService {
         this.adventureRepository = adventureRepository;
     }
 
-    public List<Adventure> getAdventures (){
+    public List<Adventure> getAdventures(){
         System.out.println("service calling getCountries =====>");
         MyUserDetails myUserDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         List<Adventure> adventureList = adventureRepository.findByUserId(myUserDetails.getUser().getId());
