@@ -51,3 +51,20 @@ This is the backend for a World Traveled tracking application. It allows users t
 - String profileDescription
 
 ![World Traveled ERD](docs/image.png)
+
+## Endpoints
+Request Type | Visibility | Endpoint Address | Description
+------------ | ---------- | ---------------- | -----------
+POST | Public | http://localhost:9092/auth/users/register | Registers a new User
+POST | Public | http://localhost:9092/auth/users/login | Logs in a User, allowing them access to private endpoints
+POST | Private | http://localhost:9092/api/adventures | Creates a new Adventure
+GET | Private | http://localhost:9092/api/adventures | Returns all User Adventure objects
+GET | Private | http://localhost:9092/api/countries | Returns all Country objects a user has an Adventure in
+DELETE | Private | http://localhost:9092/api/adventures/{adventureId} | Deletes a single Adventure object
+PUT | Private | http://localhost:9092/api/adventures/{adventureId} | Updates a single Adventure
+GET | Private | http://localhost:9092/api/adventures/{adventureId} | Returns a single Adventure object
+GET | Private | http://localhost:9092/api/adventures/{adventureId}/countries/ | Returns a single Country object based on adventureId
+PUT | Private | http://localhost:9092/auth/users/reset | Updates the User password
+POST | Private | http://localhost:9092/auth/api/profile | Creates a UserProfile
+PUT | Private | http://localhost:9092/auth/api/profile | Updates a UserProfile
+PUT | Private | http://localhost:9092/auth/users/email | Allows user to update their email address
