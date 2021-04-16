@@ -9,6 +9,8 @@ import com.worldtravel.demo.model.UserProfile;
 import com.worldtravel.demo.repository.AdventureRepository;
 import com.worldtravel.demo.repository.CountryRepository;
 import com.worldtravel.demo.security.MyUserDetailsService;
+import com.worldtravel.demo.security.WithMockCustomUser;
+import com.worldtravel.demo.security.WithMockCustomUserSecurityContextFactory;
 import com.worldtravel.demo.service.AdventureService;
 import com.worldtravel.demo.service.UserProfileService;
 import org.hamcrest.collection.IsCollectionWithSize;
@@ -18,6 +20,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -26,6 +29,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -49,9 +54,11 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@ContextConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
 class AdventureControllerTest {
     static ApplicationContext applicationContext = null;
@@ -74,10 +81,6 @@ class AdventureControllerTest {
 
     @InjectMocks
     private AdventureController adventureController;
-//    @InjectMocks
-//    private CountryRepository countryRepository;
-//    @InjectMocks
-//    private AdventureRepository adventureRepository;
 
     @Autowired
     private MockMvc mockMvc;
@@ -95,7 +98,7 @@ class AdventureControllerTest {
         countryList.add(germany);
         adventureList = new ArrayList<>();
         adventure1 = new Adventure(1L, "Adventure 1", "12/1/20", "Fun trip to Mexico", "Mexico");
-        adventure2 = new Adventure(1L, "Adventure 2", "12/1/21", "Fun trip to Germany", "Germany");
+        adventure2 = new Adventure(2L, "Adventure 2", "12/1/21", "Fun trip to Germany", "Germany");
         adventureList.add(adventure1);
         adventureList.add(adventure2);
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
@@ -123,7 +126,7 @@ class AdventureControllerTest {
         mockMvc.perform(get("/api/adventures").
                 contentType(MediaType.APPLICATION_JSON).
                 content(mapToJson(adventureList))).
-                andExpect(MockMvcResultMatchers.status().isOk()).
+                andExpect(status().isOk()).
                 // Checks that the list has a size of 2 and the values of attributes of Adventure in the 0th index matches expected
                 andExpect(jsonPath("$", hasSize(2))).andExpect(jsonPath("$[0].id").value(1L)).
                 andExpect(jsonPath("$[0].adventureName").value(adventure1.getAdventureName())).
@@ -153,7 +156,7 @@ class AdventureControllerTest {
         mockMvc.perform(post("/api/adventures")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapToJson(adventure1)))
-                .andExpect(MockMvcResultMatchers.status().isOk());
+                .andExpect(status().isOk());
     }
 
     @Test
@@ -170,11 +173,16 @@ class AdventureControllerTest {
         mockMvc.perform(get("/api/countries")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapToJson(distinctCountries)))
-                .andExpect(MockMvcResultMatchers.status().isOk());
+                .andExpect(status().isOk());
     }
 
     @Test
-    void getCountry() {
+    void getCountry() throws Exception{
+        when(adventureService.getCountry(adventureList.get(0).getId())).thenReturn(mexico);
+        mockMvc.perform(get("/api/adventures/{id}/countries", 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapToJson(mexico)))
+                .andExpect(status().isOk());
     }
 
     @Test
