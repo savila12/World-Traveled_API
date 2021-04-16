@@ -194,6 +194,14 @@ class AdventureControllerTest {
     }
 
     @Test
-    void updateAdventure() {
+    void updateAdventure() throws Exception{
+        Adventure adventureUpdate = new Adventure(1L, "Adventure Name", "Date Went",
+                "Adventure Description", "Country name");
+        when(adventureService.updateAdventure(adventureList.get(0).getId(), adventureUpdate))
+                .thenReturn(adventure1);
+        mockMvc.perform(put("/api/adventures/{adventureId}", 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapToJson(adventure1)))
+                .andExpect(status().isOk());
     }
 }
