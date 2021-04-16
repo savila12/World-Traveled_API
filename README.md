@@ -7,3 +7,32 @@ This is the backend for a World Traveled tracking application. It allows users t
 - Spring Boot
 - Postgres
 - Postman (for testing endpoints)
+
+### Domain Models & ERD
+
+**User**
+- **PK** Long id
+- **FK** Long userProfileId
+- String userName
+- String email
+- String password *(encoded)*
+
+**Adventure**
+- **PK** Long id
+- **FK** Long userId
+- **FK** Long countryId
+- String dateWent
+- String adventureDescription
+- String countryName
+
+**Country**
+- **PK** Long id
+- String countryName
+
+**UserProfile**
+- **PK** Long id
+- String firstName
+- String lastName
+- String profileDescription
+
+![World Traveled ERD](docs/image.png)
