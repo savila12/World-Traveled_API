@@ -23,8 +23,8 @@ This is the backend for a World Traveled tracking application. It allows users t
 - Postgres
 - Postman (for testing endpoints)
 
-### Domain Models & ERD
-
+## Domain Models, Relationships & ERD
+### Models
 **User**
 - **PK** Long id
 - **FK** Long userProfileId
@@ -50,6 +50,13 @@ This is the backend for a World Traveled tracking application. It allows users t
 - String lastName
 - String profileDescription
 
+### Relationships
+- **User** to **UserProfile**: One to One
+- **User** to **Country**: Many to Many - this is achieved by the median **Adventure** entity, which connects the two
+  - **User** to **Adventure**: One to Many
+  - **Country** to **Adventure**: One to Many
+
+### ERD
 ![World Traveled ERD](docs/image.png)
 
 ## Endpoints
