@@ -128,7 +128,7 @@ class AdventureControllerTest {
         when(adventureService.getAdventure(any())).thenReturn(adventure1);
         mockMvc.perform(get("/api/adventures/{id}", 1).
                 contentType(MediaType.APPLICATION_JSON).
-                content(mapToJson(adventure2))).
+                content(mapToJson(adventure1))).
                 andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(jsonPath("$.id").value(1)).andDo(print());
     }
