@@ -1,6 +1,5 @@
 package com.worldtravel.demo.model;
 
-
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -23,14 +22,12 @@ public class Country {
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Adventure> adventureList;
 
-
-
     public Country() {
     }
 
     public Country(Long id, String name) {
         this.id = id;
-        this.name = name;
+        this.name = name.toLowerCase();
     }
 
     public Long getId() {
@@ -56,11 +53,6 @@ public class Country {
                 ", name='" + name + '\'' +
                 '}';
     }
-
-
-//    public List<Adventure> getAdventureList() {
-//        return adventureList;
-//    }
 
     public void setAdventureList(List<Adventure> adventureList) {
         this.adventureList = adventureList;

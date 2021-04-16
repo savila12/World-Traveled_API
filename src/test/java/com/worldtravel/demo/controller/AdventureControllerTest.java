@@ -69,7 +69,6 @@ class AdventureControllerTest {
     @Autowired
     MyUserDetailsService myUserDetailsService;
 
-
     private User user;
     private Adventure adventure1;
     private Adventure adventure2;
@@ -186,7 +185,7 @@ class AdventureControllerTest {
 
     @Test
     void deleteAdventure() throws Exception{
-        when(adventureService.deleteAdventure(adventureList.get(0).getId())).thenReturn(adventure1);
+        when(adventureService.deleteAdventure(adventureList.get(0).getId())).thenReturn(String.valueOf(adventure1));
         mockMvc.perform(delete("/api/adventures/{adventureId}", 1)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapToJson(adventure1)))
