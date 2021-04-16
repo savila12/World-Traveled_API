@@ -46,7 +46,7 @@ public class AdventureService {
     }
 
     public Adventure getAdventure(Long adventureId){
-        System.out.println("calling getAdventure =====>");
+        System.out.println("service calling getAdventure =====>");
         MyUserDetails myUserDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Adventure adventure = adventureRepository.findByUserIdAndId(myUserDetails.getUser().getId(), adventureId);
         if(adventure == null){
@@ -107,7 +107,7 @@ public class AdventureService {
         }
     }
 
-    public Adventure deleteAdventure(Long adventureId){
+    public String deleteAdventure(Long adventureId){
         System.out.println("service calling deleteAdventure =====>");
         MyUserDetails myUserDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
@@ -117,7 +117,7 @@ public class AdventureService {
         }
         else{
             adventureRepository.deleteById(adventureId);
-            return adventure;
+            return "Deleted Successfully";
         }
     }
 
