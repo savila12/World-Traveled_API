@@ -8,5 +8,6 @@ import org.springframework.security.test.context.support.WithSecurityContextFact
 public @interface WithMockCustomUser {
 
     String userName();
-    String password();
+    String email();
+    //String password();
 }

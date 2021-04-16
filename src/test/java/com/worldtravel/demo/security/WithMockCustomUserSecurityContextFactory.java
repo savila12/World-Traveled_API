@@ -11,10 +11,11 @@ import org.springframework.security.test.context.support.WithSecurityContextFact
 public class WithMockCustomUserSecurityContextFactory implements WithSecurityContextFactory<WithMockCustomUser> {
     @Override
     public SecurityContext  createSecurityContext(WithMockCustomUser customUser) {
-        User user = new User(3L, customUser.userName(), "jslkl@sl.com", customUser.password());
+        User user = new User(3L, customUser.userName(), customUser.email(), "123456");
         SecurityContext context = SecurityContextHolder.createEmptyContext();
 
-        MyUserDetails principal = new MyUserDetails(user);
+        MyUserDetails principal =  new MyUserDetails(user);
+
         Authentication authentication = new UsernamePasswordAuthenticationToken(principal, null,null);
         context.setAuthentication(authentication);
         return context;
