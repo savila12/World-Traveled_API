@@ -35,6 +35,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.awt.*;
 import java.io.IOException;
@@ -63,10 +64,13 @@ class UserControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
+    @Autowired
+    private WebApplicationContext webApplicationContext;
+
     @BeforeEach
     public void setup(){
         user = new User(1L, "jenjanik", "jen@scuz.com", "123456");
-        mockMvc = MockMvcBuilders.standaloneSetup(userController).build();
+        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
     }
 
     @AfterEach
@@ -94,10 +98,12 @@ class UserControllerTest {
 
 
     @Test
-    @WithMockUser(username = "jslkl@sl.com", password = "123456")
     void loginUser() throws Exception{
+        ResponseEntity<Object> response = new ResponseEntity<>(HttpStatus.OK);
+
+        when(userService.loginUser(any())).thenReturn(response);
         mockMvc.perform(post("/auth/users/login")
-                .contentType(MediaType.APPLICATION_JSON))
+                .contentType(MediaType.APPLICATION_JSON).content(mapToJson(user)))
                 .andExpect(status().isOk());
     }
 
