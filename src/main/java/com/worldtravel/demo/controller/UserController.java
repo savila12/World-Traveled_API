@@ -19,6 +19,7 @@ public class UserController {
     }
 
     //http://localhost:9092/auth/users/register
+    @CrossOrigin
     @PostMapping("/register")
     public User createUser(@RequestBody User userObject){
         System.out.println("calling createUser");
